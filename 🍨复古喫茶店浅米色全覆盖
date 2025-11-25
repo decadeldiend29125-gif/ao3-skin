@@ -1,3 +1,4 @@
+/* 1. 基础设置 (保持不变) */
 html {
   height: 100%;
 }
@@ -8,37 +9,55 @@ body {
   background: transparent !important;
 }
 
+/* 2. 修复筛选器与容器 (保持不变，确保弹窗可用) */
 #outer {
   background: transparent !important;
   position: relative;
-  z-index: 1;
+  z-index: 1; 
   overflow: visible !important;
 }
 
+/* 3. 第一层背景：图片 (核心修复部分) */
 body::before {
   content: "";
   display: block;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  position: fixed; 
+  top: 0; 
+  left: 0; 
+  
+  /* 【关键修改】锁死宽度和高度 */
+  width: 100vw; 
+  
+  /* 兼容旧手机 */
+  height: 100vh; 
+  /* 核心修复：使用 'lvh' 强制保持最大高度，禁止随地址栏伸缩 */
+  height: 100lvh; 
+  
   background-image: url('https://64.media.tumblr.com/b247075e187fd0ffb8c5a266270fcf68/7cb797b285b68426-86/s1280x1920/0d88b93cfc62f68fb83821ba872ede4971837e90.jpg');
+  
   background-repeat: no-repeat;
   background-position: center center;
   background-size: cover;
-  z-index: -2;
+  
+  z-index: -2; 
 }
 
+/* 4. 第二层背景：半透明蒙层 (核心修复部分) */
 body::after {
   content: "";
   display: block;
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  top: 0; 
+  left: 0; 
+  
+  /* 【关键修改】同上，蒙层也要锁死高度 */
+  width: 100vw;
+  height: 100vh;
+  height: 100lvh;
+  
+  /* 你的半透明颜色 */
   background: rgba(255, 248, 231, 0.5);
+  
   z-index: -1;
 }
 
